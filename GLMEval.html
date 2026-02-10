@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genomic Language Model Evaluation Metrics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .metric-content.expanded {
+            max-height: 2000px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-indigo-50">
+    <div class="w-full max-w-6xl mx-auto p-6 min-h-screen">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-xl p-8 mb-8 text-white">
+            <h1 class="text-4xl font-bold mb-3">Genomic Language Model Evaluation</h1>
+            <p class="text-indigo-100 text-lg">Understanding key metrics for assessing model performance on biological sequences</p>
+        </div>
+
+        <!-- Overview -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Why Multiple Metrics?</h2>
+            <p class="text-slate-600 mb-4">
+                Genomic language models must capture multiple levels of biological organization—from local sequence patterns to long-range interactions. Each metric evaluates a different aspect of the model's understanding:
+            </p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h3 class="font-semibold text-blue-900 mb-2">Structure Prediction</h3>
+                    <p class="text-sm text-blue-700">pTM, pLDDT assess 3D protein structure quality</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <h3 class="font-semibold text-purple-900 mb-2">Spatial Interactions</h3>
+                    <p class="text-sm text-purple-700">Contact maps evaluate residue proximities</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h3 class="font-semibold text-green-900 mb-2">Functional Context</h3>
+                    <p class="text-sm text-green-700">Operon inpainting tests functional genomic understanding</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="space-y-4 mb-6">
+            <!-- pTM -->
+            <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-blue-500 overflow-hidden">
+                <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('ptm')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="p-2 rounded-lg bg-blue-100">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">pTM (predicted Template Modeling score)</h3>
+                                <p class="text-sm text-slate-600 mt-1">Confidence metric for overall protein structure alignment</p>
+                            </div>
+                        </div>
+                        <span id="ptm-icon" class="text-slate-400">▼</span>
+                    </div>
+                </div>
+                
+                <div id="ptm-content" class="metric-content px-5 pb-5 border-t border-slate-100">
+                    <div class="pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">📊 What It Measures</h4>
+                            <p class="text-sm text-slate-600">The expected accuracy of the predicted structure's global alignment to the true structure, focusing on domain-domain orientations and overall fold correctness.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">⚙️ How It Works</h4>
+                            <p class="text-sm text-slate-600">Derived from predicted aligned error (PAE) matrix. pTM ranges from 0 to 1, computed as the fraction of residue pairs whose predicted distance error falls within a threshold (typically less than 5Å). Higher values indicate confident predictions of relative domain positions.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🎯 Interpretation</h4>
+                            <ul class="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                                <li><span class="font-semibold">pTM greater than 0.8:</span> High confidence in global structure</li>
+                                <li><span class="font-semibold">pTM 0.5-0.8:</span> Moderate confidence; some domains may be misoriented</li>
+                                <li><span class="font-semibold">pTM less than 0.5:</span> Low confidence; treat with caution</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🧬 Biological Context</h4>
+                            <p class="text-sm text-slate-600">Critical for multi-domain proteins, protein complexes, and evaluating whether your model understands long-range structural constraints. Models that only learn local patterns will have poor pTM scores on complex proteins.</p>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-blue-900 mb-2">🔬 Use Case in GLM Evaluation</p>
+                            <p class="text-sm text-blue-800">Generate protein structures from genomic sequences, then assess if the model's learned representations capture long-range dependencies needed for correct domain assembly. Useful for validating that context window and attention mechanisms work properly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- pLDDT -->
+            <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-purple-500 overflow-hidden">
+                <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('plddt')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="p-2 rounded-lg bg-purple-100">
+                                <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">pLDDT (predicted Local Distance Difference Test)</h3>
+                                <p class="text-sm text-slate-600 mt-1">Per-residue confidence score for local structure quality</p>
+                            </div>
+                        </div>
+                        <span id="plddt-icon" class="text-slate-400">▼</span>
+                    </div>
+                </div>
+                
+                <div id="plddt-content" class="metric-content px-5 pb-5 border-t border-slate-100">
+                    <div class="pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">📊 What It Measures</h4>
+                            <p class="text-sm text-slate-600">The expected accuracy of local backbone geometry around each residue. Provides a position-specific confidence estimate (0-100) for how well the local structure is predicted.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">⚙️ How It Works</h4>
+                            <p class="text-sm text-slate-600">For each residue, pLDDT estimates the percentage of Cα atoms within 15Å that are predicted within 1.5Å of their true positions. Models output per-residue pLDDT values alongside structure predictions.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🎯 Interpretation</h4>
+                            <ul class="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                                <li><span class="font-semibold">pLDDT greater than 90:</span> Very high confidence (well-ordered regions)</li>
+                                <li><span class="font-semibold">pLDDT 70-90:</span> Generally reliable backbone prediction</li>
+                                <li><span class="font-semibold">pLDDT 50-70:</span> Low confidence (loops, disordered regions)</li>
+                                <li><span class="font-semibold">pLDDT less than 50:</span> Should not be interpreted (likely disordered)</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🧬 Biological Context</h4>
+                            <p class="text-sm text-slate-600">Helps identify which parts of a protein are well-folded vs. disordered. Low pLDDT regions often correspond to flexible loops, intrinsically disordered regions, or missing interactions with other molecules.</p>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-purple-900 mb-2">🔬 Use Case in GLM Evaluation</p>
+                            <p class="text-sm text-purple-800">Track whether model confidence correlates with actual structural accuracy. Compare pLDDT distributions across training to see if the model is learning which predictions to trust. Also useful for identifying if the model struggles with specific structural features (helices, sheets, loops).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Map -->
+            <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-green-500 overflow-hidden">
+                <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('contact')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="p-2 rounded-lg bg-green-100">
+                                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                    <rect x="3" y="14" width="7" height="7"></rect>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">Protein Contact Map</h3>
+                                <p class="text-sm text-slate-600 mt-1">Binary matrix of spatial proximities between residues</p>
+                            </div>
+                        </div>
+                        <span id="contact-icon" class="text-slate-400">▼</span>
+                    </div>
+                </div>
+                
+                <div id="contact-content" class="metric-content px-5 pb-5 border-t border-slate-100">
+                    <div class="pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">📊 What It Measures</h4>
+                            <p class="text-sm text-slate-600">Which pairs of amino acids are close together in 3D space (typically within 8Å for Cβ atoms). Provides a rotation/translation-invariant representation of protein structure.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">⚙️ How It Works</h4>
+                            <p class="text-sm text-slate-600">For a protein of length L, create an L×L matrix where entry (i,j) = 1 if residues i and j are within the distance threshold, 0 otherwise. Compare predicted contact maps to true contacts from experimental structures or high-quality predictions.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🎯 Interpretation</h4>
+                            <div class="text-sm text-slate-600 space-y-2">
+                                <p>Evaluate using precision, recall, and F1 at various distance ranges:</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li><span class="font-semibold">Short-range:</span> distance less than 12 (local secondary structure)</li>
+                                    <li><span class="font-semibold">Medium-range:</span> 12 to 24 (tertiary interactions)</li>
+                                    <li><span class="font-semibold">Long-range:</span> distance 24 or greater (tests true long-context understanding)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🧬 Biological Context</h4>
+                            <p class="text-sm text-slate-600">Contact maps capture the essence of protein structure without coordinate frames. They're especially powerful for evaluating whether models learn physically meaningful constraints—residues far apart in sequence but close in structure due to folding.</p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-green-900 mb-2">🔬 Use Case in GLM Evaluation</p>
+                            <p class="text-sm text-green-800">Directly tests if your model's attention patterns or learned representations capture long-range dependencies in sequence. Poor long-range contact prediction often indicates the model relies too heavily on local context. Can be used for gradient saliency analysis to see which input tokens contribute to contact predictions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operon Inpainting -->
+            <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-orange-500 overflow-hidden">
+                <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('operon')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="p-2 rounded-lg bg-orange-100">
+                                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">Operon Inpainting</h3>
+                                <p class="text-sm text-slate-600 mt-1">Masked gene reconstruction within functional genomic units</p>
+                            </div>
+                        </div>
+                        <span id="operon-icon" class="text-slate-400">▼</span>
+                    </div>
+                </div>
+                
+                <div id="operon-content" class="metric-content px-5 pb-5 border-t border-slate-100">
+                    <div class="pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">📊 What It Measures</h4>
+                            <p class="text-sm text-slate-600">The model's ability to reconstruct a masked gene using surrounding genomic context, testing both sequence prediction accuracy and functional genomic understanding.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">⚙️ How It Works</h4>
+                            <p class="text-sm text-slate-600">Mask a gene within an operon (a cluster of co-regulated genes in bacteria), then ask the model to reconstruct it. Can use various masking strategies: full gene masking, partial masking, or noising at different timesteps. Evaluate via perplexity, exact match accuracy, or functional equivalence.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🎯 Interpretation</h4>
+                            <ul class="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                                <li><span class="font-semibold">High accuracy:</span> Model understands functional gene co-occurrence</li>
+                                <li><span class="font-semibold">Random predictions:</span> Model lacks functional genomic context</li>
+                                <li><span class="font-semibold">Local copying:</span> Model relies on sequence similarity, not function</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🧬 Biological Context</h4>
+                            <p class="text-sm text-slate-600">Operons are fundamental units of bacterial gene regulation. Genes in an operon are functionally related and transcribed together. Successfully predicting a masked gene requires understanding regulatory context, functional relationships, and genomic organization—not just sequence patterns.</p>
+                        </div>
+                        
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-orange-900 mb-2">🔬 Use Case in GLM Evaluation</p>
+                            <p class="text-sm text-orange-800">Perfect for testing long-context learning and functional understanding. Use gradient saliency to check if the model actually uses distant context or just predicts from local patterns. The conversation transcript shows this being used to validate that span masking encourages distant context usage at early/late denoising timesteps.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Metrics -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                Additional Evaluation Metrics
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">🧬 Hi-C Contact Maps</h3>
+                    <p class="text-sm text-slate-600 mb-2">3D chromatin interaction maps showing which genomic regions physically interact in the nucleus.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Evaluate long-range regulatory element interactions (enhancer-promoter contacts). Tests eukaryotic genome organization understanding.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">🔗 StringDB Integration</h3>
+                    <p class="text-sm text-slate-600 mb-2">Protein-protein interaction network data for functional associations.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Test if model learns which proteins interact. Can generate training data by upsampling interacting gene pairs.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">📊 Perplexity</h3>
+                    <p class="text-sm text-slate-600 mb-2">Standard language modeling metric measuring how well the model predicts held-out sequences.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> General sequence prediction quality. Lower perplexity indicates better learned representations, but doesn't guarantee biological understanding.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">🎯 Functional Annotation Tasks</h3>
+                    <p class="text-sm text-slate-600 mb-2">Predict gene function, subcellular localization, protein family, or enzymatic activity.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Downstream task performance indicates whether embeddings capture biologically meaningful features.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">🧪 Gradient Saliency Analysis</h3>
+                    <p class="text-sm text-slate-600 mb-2">Compute input × gradient to identify which input tokens contribute most to predictions.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Debug attention patterns. Validate that long-context mechanisms actually use distant context vs. local copying. Fast and scalable.</p>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
+                    <h3 class="font-bold text-slate-800 mb-2">🔬 Sequence Generation Quality</h3>
+                    <p class="text-sm text-slate-600 mb-2">Generate novel sequences and assess via structure prediction, functional prediction, or experimental validation.</p>
+                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Ultimate test of biological understanding. Can generated sequences fold properly? Are they functionally coherent?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg shadow-md p-6 border-2 border-indigo-200">
+            <h2 class="text-xl font-bold text-slate-800 mb-3">💡 Evaluation Best Practices</h2>
+            <ul class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2">
+                    <span class="text-indigo-600 font-bold">•</span>
+                    <span><span class="font-semibold">Use multiple metrics:</span> No single metric captures all aspects of biological understanding. Structure, function, and context all matter.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-indigo-600 font-bold">•</span>
+                    <span><span class="font-semibold">Test across scales:</span> Evaluate local (secondary structure), medium (domain), and long-range (inter-domain, regulatory) interactions.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-indigo-600 font-bold">•</span>
+                    <span><span class="font-semibold">Track during training:</span> Monitor metrics throughout pretraining to understand what the model learns and when.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-indigo-600 font-bold">•</span>
+                    <span><span class="font-semibold">Use gradient analysis:</span> Don't just trust performance—verify the model is using the right context via saliency or attention analysis.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-indigo-600 font-bold">•</span>
+                    <span><span class="font-semibold">Domain-specific validation:</span> Test on prokaryotic (operons, CRISPR) and eukaryotic (chromatin, splicing) features separately.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleMetric(metricId) {
+            const content = document.getElementById(metricId + '-content');
+            const icon = document.getElementById(metricId + '-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▲';
+            }
+        }
+    </script>
+</body>
+</html>
