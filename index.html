@@ -52,6 +52,70 @@
             </div>
         </div>
 
+        <!-- Generative Capabilities Highlight -->
+        <div class="bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 rounded-lg shadow-lg p-6 mb-6 border-2 border-amber-400">
+            <div class="flex items-center gap-3 mb-4">
+                <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <h2 class="text-2xl font-bold text-amber-900">⭐ Evaluating Generative Capabilities</h2>
+            </div>
+            <p class="text-slate-700 mb-4">
+                Beyond understanding existing sequences, genomic language models can <span class="font-semibold text-amber-900">generate novel biological sequences</span>. Evaluating generative capabilities tests whether the model truly understands biological constraints or just memorizes patterns.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white rounded-lg p-4 border-l-4 border-amber-500">
+                    <h3 class="font-bold text-slate-800 mb-2">🧬 Sequence Generation Quality</h3>
+                    <p class="text-sm text-slate-600 mb-3">Generate novel DNA/protein sequences and validate them:</p>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li>• <span class="font-semibold">Structure validation:</span> Do generated proteins fold into stable structures? (pTM, pLDDT, TM-score)</li>
+                        <li>• <span class="font-semibold">Functional coherence:</span> Are generated sequences functionally plausible? (functional annotation, fitness prediction)</li>
+                        <li>• <span class="font-semibold">Diversity vs. validity:</span> Balance between novel sequences and biological realism</li>
+                        <li>• <span class="font-semibold">Experimental validation:</span> Ultimate test - synthesize and test in the lab</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 border-l-4 border-amber-500">
+                    <h3 class="font-bold text-slate-800 mb-2">🔄 Conditional Generation Tasks</h3>
+                    <p class="text-sm text-slate-600 mb-3">Generate sequences with specific properties:</p>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li>• <span class="font-semibold">Operon inpainting:</span> Fill in masked genes with functionally appropriate sequences</li>
+                        <li>• <span class="font-semibold">Variant design:</span> Generate beneficial mutations (optimize fitness while maintaining fold)</li>
+                        <li>• <span class="font-semibold">Promoter design:</span> Create regulatory elements with desired expression patterns</li>
+                        <li>• <span class="font-semibold">Protein engineering:</span> Design sequences with target properties (stability, activity, specificity)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 border-l-4 border-amber-500">
+                    <h3 class="font-bold text-slate-800 mb-2">📊 Generative Evaluation Metrics</h3>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li>• <span class="font-semibold">Validity rate:</span> % of generated sequences that are biologically plausible</li>
+                        <li>• <span class="font-semibold">Novelty score:</span> Distance from training set (avoid simple memorization)</li>
+                        <li>• <span class="font-semibold">Property success rate:</span> % achieving desired functional properties</li>
+                        <li>• <span class="font-semibold">Fréchet Inception Distance (FID):</span> Distribution similarity between real and generated sequences</li>
+                        <li>• <span class="font-semibold">Self-consistency:</span> Generated sequences score well on discriminative tasks (VEP, structure prediction)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 border-l-4 border-amber-500">
+                    <h3 class="font-bold text-slate-800 mb-2">⚠️ Common Pitfalls to Avoid</h3>
+                    <ul class="text-xs text-slate-600 space-y-1">
+                        <li>• <span class="font-semibold">Mode collapse:</span> Model generates limited diversity</li>
+                        <li>• <span class="font-semibold">Trivial solutions:</span> Copying training examples or generating simple repeats</li>
+                        <li>• <span class="font-semibold">Distribution shift:</span> Generated sequences have different properties than natural ones</li>
+                        <li>• <span class="font-semibold">Lack of long-range coherence:</span> Locally plausible but globally nonsensical</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-4 bg-amber-100 rounded-lg p-4 border border-amber-300">
+                <p class="text-sm text-amber-900">
+                    <span class="font-bold">💡 Key Insight:</span> A model with high perplexity/accuracy on held-out data may still generate poor sequences. Always evaluate generation quality directly, not just discriminative performance. The ultimate test is experimental validation in the lab.
+                </p>
+            </div>
+        </div>
+
         <!-- Metric Cards -->
         <div class="space-y-4 mb-6">
             <!-- pTM -->
@@ -221,6 +285,60 @@
                 </div>
             </div>
 
+            <!-- AA Recovery -->
+            <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-rose-500 overflow-hidden">
+                <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('aarecovery')">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="p-2 rounded-lg bg-rose-100">
+                                <svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800">AA Recovery (Amino Acid Recovery)</h3>
+                                <p class="text-sm text-slate-600 mt-1">Accuracy of reconstructing masked amino acids in protein sequences</p>
+                            </div>
+                        </div>
+                        <span id="aarecovery-icon" class="text-slate-400">▼</span>
+                    </div>
+                </div>
+                
+                <div id="aarecovery-content" class="metric-content px-5 pb-5 border-t border-slate-100">
+                    <div class="pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">📊 What It Measures</h4>
+                            <p class="text-sm text-slate-600">The percentage of masked amino acids that the model correctly predicts when given surrounding sequence context. A fundamental metric for evaluating whether the model has learned protein sequence constraints.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">⚙️ How It Works</h4>
+                            <p class="text-sm text-slate-600">Randomly mask a percentage of amino acids in protein sequences (typically 15-30%), ask the model to predict the masked positions, and calculate the percentage of correct predictions. Can be computed globally or stratified by amino acid type, secondary structure, or solvent accessibility.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🎯 Interpretation</h4>
+                            <ul class="text-sm text-slate-600 list-disc pl-5 space-y-1">
+                                <li><span class="font-semibold">Random baseline:</span> ~5% (1/20 amino acids)</li>
+                                <li><span class="font-semibold">Sequence homology baseline:</span> 30-40% (using evolutionary information)</li>
+                                <li><span class="font-semibold">Good protein LM:</span> 45-55%</li>
+                                <li><span class="font-semibold">State-of-the-art:</span> 55-65%+ (ESM-2, ProtGPT)</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-slate-700 mb-2">🧬 Biological Context</h4>
+                            <p class="text-sm text-slate-600">Amino acid recovery tests whether the model understands structural and functional constraints on protein sequences. High recovery suggests the model has learned which substitutions are viable at each position based on local structure, chemistry, and evolutionary patterns.</p>
+                        </div>
+                        
+                        <div class="bg-rose-50 p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-rose-900 mb-2">🔬 Use Case in GLM Evaluation</p>
+                            <p class="text-sm text-rose-800">Essential baseline metric for protein language models. Track across training to monitor learning progress. Can stratify by residue burial (surface vs. core), secondary structure (helix vs. sheet vs. loop), or amino acid properties (hydrophobic vs. charged) to identify what the model learns well vs. poorly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Operon Inpainting -->
             <div class="metric-card bg-white rounded-lg shadow-md border-l-4 border-orange-500 overflow-hidden">
                 <div class="p-5 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleMetric('operon')">
@@ -283,42 +401,148 @@
                 </svg>
                 Additional Evaluation Metrics
             </h2>
-            
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">🧬 Hi-C Contact Maps</h3>
-                    <p class="text-sm text-slate-600 mb-2">3D chromatin interaction maps showing which genomic regions physically interact in the nucleus.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Evaluate long-range regulatory element interactions (enhancer-promoter contacts). Tests eukaryotic genome organization understanding.</p>
-                </div>
 
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">🔗 StringDB Integration</h3>
-                    <p class="text-sm text-slate-600 mb-2">Protein-protein interaction network data for functional associations.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Test if model learns which proteins interact. Can generate training data by upsampling interacting gene pairs.</p>
-                </div>
+            <!-- Category 1: Structure Prediction -->
+            <div class="mb-6">
+                <h3 class="text-lg font-bold text-blue-900 mb-3 pb-2 border-b-2 border-blue-200">Structure Prediction Metrics</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">📏 TM-score</h3>
+                        <p class="text-sm text-slate-600 mb-2">Template Modeling score for comparing predicted vs. actual 3D structures (0-1 scale).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Standard structural similarity metric. TM-score greater than 0.5 indicates similar folds; greater than 0.6 indicates highly similar structures.</p>
+                    </div>
 
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">📊 Perplexity</h3>
-                    <p class="text-sm text-slate-600 mb-2">Standard language modeling metric measuring how well the model predicts held-out sequences.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> General sequence prediction quality. Lower perplexity indicates better learned representations, but doesn't guarantee biological understanding.</p>
-                </div>
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🎲 RMSD (Root Mean Square Deviation)</h3>
+                        <p class="text-sm text-slate-600 mb-2">Measures average distance between corresponding atoms in predicted vs. true structures.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Lower is better. RMSD less than 2Å is excellent; 2-5Å is good; greater than 5Å indicates significant structural differences.</p>
+                    </div>
 
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">🎯 Functional Annotation Tasks</h3>
-                    <p class="text-sm text-slate-600 mb-2">Predict gene function, subcellular localization, protein family, or enzymatic activity.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Downstream task performance indicates whether embeddings capture biologically meaningful features.</p>
-                </div>
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🔄 Secondary Structure Prediction (Q3/Q8)</h3>
+                        <p class="text-sm text-slate-600 mb-2">Accuracy of predicting protein secondary structure (helix, sheet, coil) from sequence.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Q3 (3-state) baseline ~65%, good models ~80%+. Q8 (8-state) is more challenging. Tests local structure understanding.</p>
+                    </div>
 
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">🧪 Gradient Saliency Analysis</h3>
-                    <p class="text-sm text-slate-600 mb-2">Compute input × gradient to identify which input tokens contribute most to predictions.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Debug attention patterns. Validate that long-context mechanisms actually use distant context vs. local copying. Fast and scalable.</p>
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🔬 Sequence Generation Quality</h3>
+                        <p class="text-sm text-slate-600 mb-2">Generate novel sequences and assess via structure prediction, functional prediction, or experimental validation.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Ultimate test of biological understanding. Can generated sequences fold properly? Are they functionally coherent?</p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition-colors">
-                    <h3 class="font-bold text-slate-800 mb-2">🔬 Sequence Generation Quality</h3>
-                    <p class="text-sm text-slate-600 mb-2">Generate novel sequences and assess via structure prediction, functional prediction, or experimental validation.</p>
-                    <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Ultimate test of biological understanding. Can generated sequences fold properly? Are they functionally coherent?</p>
+            <!-- Category 2: Spatial Interactions -->
+            <div class="mb-6">
+                <h3 class="text-lg font-bold text-purple-900 mb-3 pb-2 border-b-2 border-purple-200">Spatial Interaction Metrics</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧬 Hi-C Contact Maps</h3>
+                        <p class="text-sm text-slate-600 mb-2">3D chromatin interaction maps showing which genomic regions physically interact in the nucleus.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Evaluate long-range regulatory element interactions (enhancer-promoter contacts). Tests eukaryotic genome organization understanding.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🔗 StringDB Integration</h3>
+                        <p class="text-sm text-slate-600 mb-2">Protein-protein interaction network data for functional associations.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Test if model learns which proteins interact. Can generate training data by upsampling interacting gene pairs.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🔗 Enhancer-Gene Linking</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict which enhancers regulate which genes, validated against experimental data (AlphaGenome benchmark).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests long-range regulatory understanding. Critical for interpreting noncoding variants. Often combined with contact map and expression predictions.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🔍 Long-Context Recall (Needle in Haystack)</h3>
+                        <p class="text-sm text-slate-600 mb-2">Retrieve a 100bp "needle" sequence from different positions in 1M bp "haystack" (Evo2 metric).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests whether model can actually use full context window. Essential for validating long-context architectures work as intended.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3: Functional Context -->
+            <div class="mb-6">
+                <h3 class="text-lg font-bold text-green-900 mb-3 pb-2 border-b-2 border-green-200">Functional Context Metrics</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🎯 Functional Annotation Tasks</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict gene function, subcellular localization, protein family, or enzymatic activity.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Downstream task performance indicates whether embeddings capture biologically meaningful features.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧬 Gene Essentiality Prediction</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict whether a gene is essential for organism survival based on sequence/context.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests functional understanding. Essential genes often have specific sequence properties and genomic contexts.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🎯 Promoter/Regulatory Element Detection</h3>
+                        <p class="text-sm text-slate-600 mb-2">Identify transcription factor binding sites, promoters, enhancers from DNA sequence.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests whether model learns regulatory grammar. Critical for eukaryotic genome understanding.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">📊 Gene Expression Log-Fold Change (LFC)</h3>
+                        <p class="text-sm text-slate-600 mb-2">Pearson correlation between predicted and measured gene expression changes (AlphaGenome key metric).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests ability to predict how variants affect gene expression levels. Cell-type-specific predictions assess context understanding. AlphaGenome: +14.7% over Borzoi.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">✂️ PSI (Percent Spliced In) Prediction</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict alternative splicing ratios: PSI3 (3' splice site usage), PSI5 (5' splice site usage).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Critical for understanding isoform variation. Pearson r between predicted vs. measured PSI across tissues. AlphaGenome evaluates per-tissue and tissue-specific patterns.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-green-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">⚡ Fitness Prediction</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict protein function/activity from sequence using deep mutational scanning data.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Gold standard for validating learned representations. Correlation with experimental fitness measurements (Spearman rho typically 0.4-0.7).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 4: Variant Effect & General Metrics -->
+            <div>
+                <h3 class="text-lg font-bold text-orange-900 mb-3 pb-2 border-b-2 border-orange-200">Variant Effect & General Model Metrics</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧬 Variant Effect Prediction (VEP) - AUROC</h3>
+                        <p class="text-sm text-slate-600 mb-2">Area under ROC curve for distinguishing pathogenic vs. benign variants (used in Evo2, AlphaGenome).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Standard benchmark on ClinVar, BRCA1/2, splice variants. AUROC allows comparison across variant types with different pathogenicity rates. State-of-the-art: 0.85-0.92 depending on variant class.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🎯 eQTL/sQTL Classification</h3>
+                        <p class="text-sm text-slate-600 mb-2">Predict whether variants are expression QTLs (eQTL) or splicing QTLs (sQTL).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Tests ability to identify regulatory variants affecting expression or splicing. AlphaGenome: +25.5% improvement in eQTL sign prediction, state-of-the-art on sQTL fine-mapping.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧪 Jensen-Shannon Divergence (Accessibility)</h3>
+                        <p class="text-sm text-slate-600 mb-2">Measures difference between predicted and observed ATAC/DNase profiles (AlphaGenome).</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Evaluates chromatin accessibility prediction quality. Lower divergence = better profile match. AlphaGenome: +1.6% for ATAC, +9.5% for DNase over ChromBPNet.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">📊 Perplexity</h3>
+                        <p class="text-sm text-slate-600 mb-2">Standard language modeling metric measuring how well the model predicts held-out sequences.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> General sequence prediction quality. Lower perplexity indicates better learned representations, but doesn't guarantee biological understanding.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧮 Cross-Entropy / Negative Log-Likelihood</h3>
+                        <p class="text-sm text-slate-600 mb-2">Standard training loss for language models measuring prediction uncertainty.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Track during training to monitor convergence. Lower values indicate better sequence probability modeling.</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-orange-300 transition-colors">
+                        <h3 class="font-bold text-slate-800 mb-2">🧪 Gradient Saliency Analysis</h3>
+                        <p class="text-sm text-slate-600 mb-2">Compute input × gradient to identify which input tokens contribute most to predictions.</p>
+                        <p class="text-xs text-slate-500"><span class="font-semibold">Use:</span> Debug attention patterns. Validate that long-context mechanisms actually use distant context vs. local copying. Fast and scalable.</p>
+                    </div>
                 </div>
             </div>
         </div>
